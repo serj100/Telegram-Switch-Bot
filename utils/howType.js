@@ -2,8 +2,8 @@ const howType = (linkBefore) => {
     let typeFormatLink = null
     const err = 'error'
 
-    let typeLinkOne = linkBefore.match(/\[.+\]\(.+\)/gm) // []()
-    let typeLinkTwo = linkBefore.match(/\(\(.+\)\)/gm) // (())
+    let typeLinkOne = linkBefore.match(/\[.*?\]\(.*?\)/g) // []()
+    let typeLinkTwo = linkBefore.match(/\(\(.*?\)\)/g) // (())
 
     try{
         if(typeLinkOne && (!typeLinkTwo)){
@@ -18,6 +18,7 @@ const howType = (linkBefore) => {
     } catch {
         return err
     }
+
 
     return typeFormatLink
 }
