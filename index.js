@@ -8,22 +8,17 @@ const bot = new TelegramBotApi(config.get('token'), {
     polling: true
 })
 
-let message = (amountLinks, result) => (
-`
-Количество найденных ссылок в тексте: ${amountLinks}
-Результат:
-
-${result}
-`
-)
-
+let messageAmountLinks = (amountLinks) => (`👀🧾 Количество форматированных ссылок в тексте: ${amountLinks}`)
 
 bot.on('message', msg => {
     const text = msg.text
     const chatId = msg.chat.id
-    let amountLinksInText = 0
+    let amountLinksInText = amount(text)
+
+    bot.sendMessage(chatId , messageAmountLinks(amountLinksInText))
     replacelinks(text).then(result => {
-        amountLinksInText = amount(result)
-        bot.sendMessage(chatId , message(amountLinksInText, result))
+        bot.sendMessage(chatId , result, {
+            disable_web_page_preview: true
+        })
     })
 })

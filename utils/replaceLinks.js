@@ -2,8 +2,8 @@ const { howType } = require('./howType')
 
 const replacelinks = async (linkBefore) => {
     let arrayTemplates = []
-    const iDoNotKnowHow = 'Я не смог разобрать текст 😒'
-    const err = 'Что-то пошло не так.'
+    const iDoNotKnowHow = 'Не нашел ссылок в тексте.'
+    const err = 'Что-то пошло не так. Возможно это был не текст.'
     let arrayTemplatesWithoutLinks = []
     let typeLinks = ''
     let arrayLinks = []
@@ -12,18 +12,17 @@ const replacelinks = async (linkBefore) => {
     let tempDecriptionArray1 = []
     let resultString = ''
 
-    if (linkBefore) {
-        typeLinks = howType(linkBefore)
-    } else {
+    if (!linkBefore){
         return err
     }
 
+    typeLinks = howType(linkBefore)
 
     switch (typeLinks) {
         case 'one':
             try {
 
-                tempSting = linkBefore.replace(/\[.*?\]\(.*?\)/g, '@new_link@')
+                tempSting = await linkBefore.replace(/\[.*?\]\(.*?\)/g, '@new_link@')
                 arrayTemplates = await linkBefore.match(/\[.*?\]\(.*?\)/g) // достаем все шаблоны
 
                 for (i = 0; i < arrayTemplates.length; i++) {
@@ -45,7 +44,7 @@ const replacelinks = async (linkBefore) => {
             }
         case 'two': {
             try {
-                tempSting = linkBefore.replace(/\(\(.*?\)\)/g, '@new_link@')
+                tempSting = await linkBefore.replace(/\(\(.*?\)\)/g, '@new_link@')
                 arrayTemplates = await linkBefore.match(/\(\(.*?\)\)/g) // достаем все шаблоны
                 
                 for (i = 0; i < arrayTemplates.length; i++) {
