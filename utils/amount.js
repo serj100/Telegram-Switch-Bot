@@ -1,3 +1,4 @@
+const { linkTypeTwo, linkTypeOne } = require('../misc/regexp')
 const { howType } = require('./howType')
 
 const amount = (linkBefore) => {
@@ -8,11 +9,11 @@ const amount = (linkBefore) => {
     try {
         switch (typeLinks) {
             case 'one':
-                arrayTemplates = linkBefore.match(/\[.*?\]\(.*?\)/g)
+                arrayTemplates = linkBefore.match(linkTypeOne)
                 amount = arrayTemplates.length
                 return amount
             case 'two':
-                arrayTemplates = linkBefore.match(/\(\(.*?\)\)/g)
+                arrayTemplates = linkBefore.match(linkTypeTwo)
                 amount = arrayTemplates.length
                 return amount
             default:

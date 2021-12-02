@@ -13,12 +13,14 @@ let messageAmountLinks = (amountLinks) => (`👀🧾 Количество фор
 bot.on('message', msg => {
     const text = msg.text
     const chatId = msg.chat.id
-    let amountLinksInText = amount(text)
+    let amountLinksInText = 0
 
-    bot.sendMessage(chatId , messageAmountLinks(amountLinksInText))
     replacelinks(text).then(result => {
+        amountLinksInText = amount(result)
         bot.sendMessage(chatId , result, {
             disable_web_page_preview: true
         })
+        bot.sendMessage(chatId , messageAmountLinks(amountLinksInText))
     })
+    
 })
